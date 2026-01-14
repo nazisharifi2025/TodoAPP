@@ -6,7 +6,13 @@ type Todo ={
   completed: boolean,
 }
 export default async function Home() {
-  const data:Todo[] =  await prisma.todo.findMany();
+  // const  Data = await prisma.todo.findFirst()
+  // const  Data = await prisma.todo.findFirstOrThrow();
+  const data:Todo[] =  await prisma.todo.findMany({
+    where: {id:{gte:4}}
+    // where:{task:'learning Prisma'}
+
+  });
   return (
     <div className="h-screen w-full bg-linear-to-b from-gray-100 to-stone-500 flex flex-col items-center gap-4">
       {data.map((todo)=>(
