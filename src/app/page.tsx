@@ -8,15 +8,15 @@ type Todo ={
 export default async function Home() {
   // const  Data = await prisma.todo.findFirst()
   // const  Data = await prisma.todo.findFirstOrThrow();
-  const data:Todo[] =  await prisma.todo.findMany({
-    where: {id:{gte:4}}
+  const data:Todo[] =  await prisma.todo.findMany(
+    // where: {id:{gte:4}}
     // where:{task:'learning Prisma'}
 
-  });
+  );
   return (
-    <div className="h-screen w-full bg-linear-to-b from-gray-100 to-stone-500 flex flex-col items-center gap-4">
+    <div className="h-screen w-full bg-linear-to-b p-12 from-gray-100 to-stone-500 flex flex-col items-center gap-4">
       {data.map((todo)=>(
-        <div className="bg-white border-8 border-black p-5 w-7/12">
+        <div key={todo.id} className="bg-white border-8 border-black p-5 w-7/12">
           {todo.task}
         </div>
       ))}
