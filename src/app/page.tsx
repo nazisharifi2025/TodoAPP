@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/db";
-import Image from "next/image";
 type Todo ={
   id:number;
   task:string;
   completed: boolean;
+  created_at: Date
 }
 export default async function Home() {
   // const  Data = await prisma.todo.findFirst()
@@ -29,7 +29,8 @@ export default async function Home() {
     <div className="h-screen w-full my-20 bg-linear-to-b p-12 from-gray-100 to-stone-500 flex flex-col items-center gap-4">
       {data.map((todo)=>(
         <div key={todo.id} className="bg-white border-8 border-black p-5 w-7/12">
-          {todo.task}
+         <h1 className="text-3xl font-bold"> {todo.task}</h1>
+         <span className="text-gray-300 w-full flex justify-end">{todo.created_at.toLocaleString()}</span>
         </div>
       ))}
     </div>
