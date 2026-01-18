@@ -11,18 +11,18 @@ export default async function Home() {
   const data:Todo[] =  await prisma.todo.findMany(
     // where: {id:{gte:4}}
     // where:{task:'learning Prisma'}
-    {
+    // {
       // where: {id: {not:4}}
       // where: {id: {gte: 2}}
       // where : {id:{lte:3}}
       // where: {id:{gt:3},task:{contains:'r'.toLocaleLowerCase()}}
-      where:{
-        OR:[
-          {task: {contains: 't'.toLocaleLowerCase()}},
-          {id: {gt:5}}
-        ]
-      }
-    }
+      // where:{
+      //   OR:[
+      //     {task: {contains: 't'.toLocaleLowerCase()}},
+      //     {id: {gt:5}}
+      //   ]
+      // }
+    // }
 
   );
   return (
