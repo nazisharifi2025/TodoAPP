@@ -22,7 +22,7 @@ export default async function Home() {
     })
   }
   return (
-    <div className="h-screen w-full my-20 bg-linear-to-b p-12 from-gray-100 to-stone-500 flex flex-col items-center gap-4">
+    <div className="h-screen w-full  my-20 bg-linear-to-b p-12 from-gray-100 to-stone-500 flex flex-col items-center gap-4">
       {dataSort.map((todo)=>(
         <TodoCard key={todo.id} todo={todo} toggelTodo={toggelTodo} />
       ))}
