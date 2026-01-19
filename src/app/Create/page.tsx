@@ -6,15 +6,15 @@ export default async function(){
     async function CreateData(formData : FormData){
         "use server"
        const myTask = formData.get('task') as string;
-       prisma.todo.create({
+       await prisma.todo.create({
         data:{
             task: myTask,
             completed: false,
             created_at : new Date(),
         }
-       });
+    });
+    revalidatePath('/');
        redirect('/');
-       revalidatePath('/');
     }
     return(
         <div className="h-screen w-full flex justify-center items-center p-5">
