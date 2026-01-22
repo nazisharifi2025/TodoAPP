@@ -1,7 +1,9 @@
-import FilterDate from "@/Componint/FilterDate";
+
+import FilterData from "@/Componint/FilterData";
 import TodoCard from "@/Componint/TodoCard";
 import { prisma } from "@/lib/db";
-import { format, startOfDay, startOfMonth, startOfWeek } from "date-fns-jalali";
+import { startOfDay, startOfMonth, startOfWeek } from "date-fns-jalali";
+import { revalidatePath } from "next/cache";
 type Todo ={
   id:number;
   task:string;
@@ -9,23 +11,23 @@ type Todo ={
   created_at: Date
 }
 export default async function Home({searchParams}:{searchParams:Promise<{filter:string}>}) {
-   const {filter} = await searchParams || "all";
-  const now = new Date();
-  let filterData: Date | undefined;
-
+  const {filter} = await searchParams || "all";
+  const now = new Date()  || undefined ;
+  let FilterDate : Date | undefined ;
   if(filter === "today"){
-    filterData = startOfDay(now);
+    FilterDate = startOfDay(now);
   }
   else if(filter === "week"){
-    filterData = startOfWeek(now);
+    FilterDate = startOfWeek(now);
   }
   else if(filter === "month"){
-    filterData = startOfMonth(now);
+    FilterDate = startOfMonth(now);
   }
+  // shoing data start
   const data:Todo[] =  await prisma.todo.findMany({
-    where: filterData?{
-      created_at: {gte: filterData}
-    }:undefined,
+    where: FilterDate?{
+      created_at: {gte: FilterDate}
+    }:undefined 
   });
   const dataSort = data.sort((a,b)=> Number(a.completed)-Number(b.completed));
   async function toggelTodo(id:number , completed:boolean){
@@ -37,12 +39,21 @@ export default async function Home({searchParams}:{searchParams:Promise<{filter:
       }
     })
   }
-  
+  // shoing data endded
+  // delete function
+  async function deleteHandler(id:number){
+    "use server";
+    await prisma.todo.delete({
+      where: {id : id}
+    })
+    revalidatePath('/');
+  }
   return (
-    <div className="h-screen w-full  my-20 bg-linear-to-b p-12 from-gray-100 to-stone-500 flex flex-col items-center gap-4">
-     <FilterDate filter={filter} />
+    <div className=" h-[80vh] overflow-y-scroll w-full  bg-gray-200 my-20 p-12  flex flex-col items-center gap-4">
+     <FilterData filter={filter} />
       {dataSort.map((todo)=>(
-        <TodoCard key={todo.id} todo={todo} toggelTodo={toggelTodo} />
+
+        <TodoCard key={todo.id} todo={todo} deleteHandler={deleteHandler} toggelTodo={toggelTodo} />
       ))}
     </div>
   );
