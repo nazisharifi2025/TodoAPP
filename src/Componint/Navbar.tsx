@@ -8,6 +8,7 @@ export default function Navbar(){
             <button className="text-white bg-blue-600 rounded-md font-bold px-6 py-2">
                 <Link href="Create">Create new Task  </Link>
             </button>
+            
             </div> 
         </div>
     )
