@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ToggelTheame from "./Toggel-Theme";
 
 export default function Navbar(){
     return(
@@ -6,6 +7,7 @@ export default function Navbar(){
             <div className="flex justify-between items-center px-3">
             <a href="/" className="text-4xl font-semibold ">Todo App</a>
             <button className="text-white bg-blue-600 rounded-md font-bold px-6 py-2">
+                <ToggelTheame/>
                 <Link href="Create">Create new Task  </Link>
             </button>
             
